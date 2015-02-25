@@ -23,8 +23,8 @@ Const UNKNOWN = 3
 ' Default settings and variable initialization
 intDaysSinceLastSuccessDateTime = 9999
 intDaysSinceLastFailedDate = 9999
-strVeeamBackupPath = "C:\test\"
-strVeeamBackupName = "BackupJob1"
+strVeeamBackupPath = ""
+strVeeamBackupName = ""
 return_code = UNKNOWN
 msg = "Error while parsing veeam backup job log"
 msgfailed = "Failed backup job found"
@@ -37,28 +37,28 @@ strLastBackupSuccessEndDateTime = ""
 strLastBackupFailedEndDateTime = ""
 
 '### Get command line arguments ###
-'Set Args = WScript.Arguments
-'If (Args.Count < 2) then
-'	output.writeline "usage: check_veaam backup_path job_name /w:warning_level /c:critical_level"
-'	output.writeline " warning_level = days since last successfull backup to generate warning"
-'	output.writeline " critical_level = days since last successfull backup to generate warning"
-'	output.writeline ""
+Set Args = WScript.Arguments
+If (Args.Count < 2) then
+	output.writeline "usage: check_veaam backup_path job_name /w:warning_level /c:critical_level"
+	output.writeline " warning_level = days since last successfull backup to generate warning"
+	output.writeline " critical_level = days since last successfull backup to generate warning"
+	output.writeline ""
 
-'	msg = "Error while parsing veeam backup job log"
-'	output.writeline msg
-'	WScript.quit return_code
-'End If
+	msg = "Error while parsing veeam backup job log"
+	output.writeline msg
+	WScript.quit return_code
+End If
 
-'strVeeamBackupPath = Args.Item(0)
-'strVeeamBackupName = Args.Item(1)
+strVeeamBackupPath = Args.Item(0)
+strVeeamBackupName = Args.Item(1)
 
 '### If we define /warning /critical on commandline it should override the script default. ###
-'If Args.Named.Exists("w") Then intBackupWarning = cint(Args.Named("w"))
-'If Args.Named.Exists("c") Then intBackupCritical = cint(Args.Named("c"))
+If Args.Named.Exists("w") Then intBackupWarning = cint(Args.Named("w"))
+If Args.Named.Exists("c") Then intBackupCritical = cint(Args.Named("c"))
 
 
 '### Open backup log file ###
-filename = strVeeamBackupPath+"\Job."+strVeeamBackupName+".Backup.log"
+filename = strVeeamBackupPath+"\BackupJob_"+strVeeamBackupName+".log"
 If DEBUGMODE then output.writeline "Opening:"+filename
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objFile = objFSO.OpenTextFile(filename, 1)
