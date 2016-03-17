@@ -1,5 +1,5 @@
 ::	Copiez fsrm.bat & authftp.txt sur C:\							::
-::	Lancez fsrm.bat via PowerShell avec en argument le dossier que vous voulez protéger	::
+::	Lancez fsrm.bat via PowerShell avec en argument le dossier que vous voulez protÃ©ger	::
 ::	Ver : 0.1 Beta Echo Tango Alpha								::
 
 @echo off
@@ -37,7 +37,7 @@ goto:fin
 
 servermanagercmd.exe -install "FS-Resource-Manager"
 
-:: Téléchargement des fichiers via ftp
+:: TÃ©lÃ©chargement des fichiers via ftp
 
 ftp -s:authftp.txt -n
 
@@ -45,11 +45,11 @@ ftp -s:authftp.txt -n
 
 filescrn filegroup import /file:listcrypto.xml
 
-:: Création du modèle de filtre
+:: CrÃ©ation du modÃ¨le de filtre
 
 filescrn template add /template:bloquer_crypto /add-filegroup:crypto /type:active /add-notification:e,notif_event.txt /add-notification:c,notif_popup.txt
 
-:: Création du filtre
+:: CrÃ©ation du filtre
 
 filescrn screen add /path:%1 /type:active /add-filegroup:"crypto" /add-notification:e,notif_event.txt /add-notification:c,notif_popup.txt
 
@@ -67,21 +67,26 @@ goto:fin
 
 Install-WindowsFeature -Name FS-Resource-Manager -IncludeManagementTools
 
-:: Téléchargement des fichiers via ftp
+:: Reboot serveur
+
+
+
+:: TÃ©lÃ©chargement des fichiers via ftp
 
 ftp -s:authftp.txt -n
 
 :: Import du groupe de fichiers
 
-filescrn filegroup
 
-:: Création du modèle de filtre
 
-filescrn template
+:: CrÃ©ation du modÃ¨le de filtre
 
-:: Création du filtre
 
-filescrn screen
+
+:: CrÃ©ation du filtre
+
+
+
 :: Suppression des fichiers
 
 del listcrypto.xml
